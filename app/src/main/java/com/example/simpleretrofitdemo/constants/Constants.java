@@ -11,7 +11,7 @@ public class Constants {
 
     static {
 
-        BASE_URL = "";
+        BASE_URL = "---- YOUR BASE URL -----";
         PATH_REQUEST_URL = "";
         PATH_RESPONSE_URL = "";
 

@@ -3,6 +3,7 @@ package com.example.simpleretrofitdemo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(getResources().getString(R.string.app_name));
         collapsingToolbar.setExpandedTitleColor(Color.BLACK);
+
+        String user_name = getIntent().getStringExtra("user_name");
+        if(user_name != null || user_name.equals("")){
+
+            Snackbar.make(toolbar, "Hello "+ user_name, Snackbar.LENGTH_LONG).show();
+
+        }
+
         loadBackdrop();
         loadListView();
 

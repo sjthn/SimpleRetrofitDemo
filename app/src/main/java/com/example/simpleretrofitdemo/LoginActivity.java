@@ -1,13 +1,15 @@
 package com.example.simpleretrofitdemo;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.simpleretrofitdemo.restapi.SimpleRestApi;
 import com.example.simpleretrofitdemo.restclient.SimpleRestClient;
@@ -20,12 +22,11 @@ import retrofit.client.Response;
 /**
  * Created by admin on 7/8/2015.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
     TextInputLayout emailTextInputLayout;
     TextInputLayout passwordTextInputLayout;
     SimpleRestApi simpleRestApi;
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +40,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.user_login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 getLoginDetails();
             }
         });
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        /*switch (v.getId()) {
-
-            case R.id.login_btn:
-                Toast.makeText(getBaseContext(), "Click!", Toast.LENGTH_LONG).show();
-                getLoginDetails();
-                break;
-
-        }*/
     }
 
     private void getLoginDetails() {
@@ -78,37 +70,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void getLoginResponse(String email, String password) {
 
-        progressBar = (ProgressBar) findViewById(R.id.progress);
-        progressBar.setVisibility(View.VISIBLE);
+        final ProgressDialog progress = new ProgressDialog(this);
+
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
 
         simpleRestApi = new SimpleRestClient().getSimpleRestApi();
         simpleRestApi.getSimpleResponse(email, password, new Callback<SimpleResponseHandler>() {
             @Override
             public void success(SimpleResponseHandler responseHandler, Response response) {
-                progressBar.setVisibility(View.GONE);
-                if (response != null) {
-
-                    Toast.makeText(LoginActivity.this, "Username: " + responseHandler.getEmail()
-                            + " Password: " + responseHandler.getPassword(), Toast.LENGTH_SHORT).show();
-                    Snackbar.make(LoginActivity.this.findViewById(android.R.id.content),
-                            "Username: " + responseHandler.getEmail()
-                                    + " Password: " + responseHandler.getPassword(),
-                            Snackbar.LENGTH_LONG).show();
-
-                } else {
-                    Toast.makeText(LoginActivity.this, "Username or Password is incorrect. Try again.", Toast.LENGTH_SHORT).show();
-                    Snackbar.make(LoginActivity.this.findViewById(android.R.id.content),
-                            "Username or Password is incorrect. Try again.", Snackbar.LENGTH_LONG).show();
-
-                }
-
+                progress.dismiss();
+                Log.e("CLASS", "JSON: " + responseHandler.getUserName());
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("user_name", responseHandler.getUserName());
+                startActivity(intent);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                progressBar.setVisibility(View.GONE);
-                Snackbar.make(LoginActivity.this.findViewById(android.R.id.content),
-                        "Something went wrong. Please try again.", Snackbar.LENGTH_LONG).show();
+                progress.dismiss();
+                Log.e("CLASS", "JSON: " + error.getCause());
             }
         });
 

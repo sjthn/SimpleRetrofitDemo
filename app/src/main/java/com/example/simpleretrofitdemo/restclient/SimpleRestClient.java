@@ -17,14 +17,9 @@ public class SimpleRestClient {
 
     public SimpleRestClient() {
 
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapterFactory(new ItemTypeAdapterFactory()) // This is the important line ;)
-                .create();
-
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(Constants.BASE_URL)
-                .setConverter(new GsonConverter(gson))
                 .build();
 
         simpleRestApi = restAdapter.create(SimpleRestApi.class);

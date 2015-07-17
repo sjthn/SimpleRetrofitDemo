@@ -1,30 +1,74 @@
 package com.example.simpleretrofitdemo.resthandler;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by admin on 7/8/2015.
  */
+
 public class SimpleResponseHandler {
 
-    @SerializedName("Name")
-    public String mUserName;
+    @Expose
+    private Integer success;
+    @SerializedName("user_name")
+    @Expose
+    private String userName;
+    @Expose
+    private String message;
 
-    @SerializedName("Password")
-    private String mPassword;
-
-    public SimpleResponseHandler(String mUserName, String mPassword) {
-        this.mUserName = mUserName;
-        this.mPassword = mPassword;
-
+    /**
+     *
+     * @return
+     * The success
+     */
+    public Integer getSuccess() {
+        return success;
     }
 
-    public String getEmail() {
-        return mUserName;
+    /**
+     *
+     * @param success
+     * The success
+     */
+    public void setSuccess(Integer success) {
+        this.success = success;
     }
 
-    public String getPassword() {
-        return mPassword;
+    /**
+     *
+     * @return
+     * The userName
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     *
+     * @param userName
+     * The user_name
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    /**
+     *
+     * @return
+     * The message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     *
+     * @param message
+     * The message
+     */
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }
