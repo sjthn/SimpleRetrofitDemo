@@ -1,3 +1,2 @@
 # SimpleRetrofitDemo
-A simple demo using retrofit and gson.
-Used some of the material design support library features.
+A demo showing how to use Retrofit 2.0 to make REST API calls.
