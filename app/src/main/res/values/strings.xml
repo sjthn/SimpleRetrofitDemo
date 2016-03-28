@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SimpleRetrofitDemo</string>
+    <string name="app_name">Retrofit 2 Demo</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

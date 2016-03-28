@@ -1,4 +1,4 @@
-package com.example.simpleretrofitdemo.ui;
+package com.example.simpleretrofitdemo.ui.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
